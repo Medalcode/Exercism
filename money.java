@@ -36,6 +36,3 @@ Tienes cuatro tareas, todas relacionadas con el tiempo dedicado a cocinar la las
 
 Define el expectedMinutesInOven()método que no toma ningún parámetro y devuelve cuántos minutos debe estar la lasaña en el horno. Según el libro de cocina, el tiempo de horno esperado en minutos es 40:
 
-Lasagna lasagna = new Lasagna();
-lasagna.expectedMinutesInOven();
-// => 40
