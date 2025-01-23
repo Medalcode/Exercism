@@ -15,8 +15,15 @@ def value_of_card(card):
     2.  'A' (ace card) = 1
     3.  '2' - '10' = numerical value.
     """
+    if card in ['J', 'Q', 'K']:
+        return 10
+    elif card == 'A':
+        return 1
+    else:
+        return int(card)
 
-    return card
+   
+
 
 def higher_card(card_one, card_two):
     """Determine which card has a higher value in the hand.
@@ -29,12 +36,17 @@ def higher_card(card_one, card_two):
     3.  '2' - '10' = numerical value.
     """
     
-    if card_one > card_two:
+    value_one = value_of_card(card_one)
+    value_two = value_of_card(card_two)
+    
+    if value_one > value_two:
         return card_one
-    elif card_two > card_one:
-        return card_one
+    elif value_two > value_one:
+        return card_two
     else:
         return card_one, card_two
+        
+    
 
 
 def value_of_ace(card_one, card_two):
@@ -49,12 +61,13 @@ def value_of_ace(card_one, card_two):
     """
     value_one = value_of_card(card_one)
     value_two = value_of_card(card_two)
+    suma = value_one + value_two
     
     if card_one == 'A' or card_two == 'A':
-        if value_one == value_of_card(card_one) + value_two == value_of_card(card_two) > 10:
-            return 1
-        else:
-            return 11
+        return 1
+    elif suma > 10:
+        print(suma)
+        return 1
     else:
         return 11
 
@@ -70,7 +83,42 @@ def is_blackjack(card_one, card_two):
     3.  '2' - '10' = numerical value.
     """
 
-    if card_one == 'A' and card_two == 10 or card_two == 'J' or card_two == 'Q' or card_two == 'K' and card_two == 'A' and card_one == 10 or card_one == 'J' or card_one == 'Q' or card_one == 'K' :
+    face_cards = ['10', 'J', 'Q', 'K']
+    if (card_one == 'A' and card_two in face_cards) or (card_two == 'A' and card_one in face_cards):
         return True
     else:
         return False
+
+    
+
+
+def can_split_pairs(card_one, card_two):
+    """Determine if a player can split their hand into two hands.
+
+    :param card_one, card_two: str - cards dealt.
+    :return: bool - can the hand be split into two pairs? (i.e. cards are of the same value).
+    """
+    value_one = value_of_card(card_one)
+    value_two = value_of_card(card_two)
+    
+    if value_one == value_two:
+        return True
+    else:
+        return False
+
+
+def can_double_down(card_one, card_two):
+    """Determine if a blackjack player can place a double down bet.
+
+    :param card_one, card_two: str - first and second cards in hand.
+    :return: bool - can the hand can be doubled down? (i.e. totals 9, 10 or 11 points).
+    """
+
+    value_one = value_of_card(card_one)
+    value_two = value_of_card(card_two)
+    
+    if value_one + value_two == 9 or value_one + value_two == 10 or value_one + value_two == 11:
+        return True
+    else:
+        return False
+
