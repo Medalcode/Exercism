@@ -26,29 +26,46 @@
  * @returns {number} the rate per day
  */
 export function dayRate(ratePerHour) {
-    return ratePerHour * 8
-  }
-  
-  /**
-   * Calculates the number of days in a budget, rounded down
-   *
-   * @param {number} budget: the total budget
-   * @param {number} ratePerHour: the rate per hour
-   * @returns {number} the number of days
-   */
-  export function daysInBudget(budget, ratePerHour) {
-    throw new Error('Remove this line and implement the function');
-  }
-  
-  /**
-   * Calculates the discounted rate for large projects, rounded up
-   *
-   * @param {number} ratePerHour
-   * @param {number} numDays: number of days the project spans
-   * @param {number} discount: for example 20% written as 0.2
-   * @returns {number} the rounded up discounted rate
-   */
-  export function priceWithMonthlyDiscount(ratePerHour, numDays, discount) {
-    throw new Error('Remove this line and implement the function');
-  }
-  
+  return ratePerHour * 8;
+}
+
+/**
+ * Calculates the number of days in a budget, rounded down
+ *
+ * @param {number} budget: the total budget
+ * @param {number} ratePerHour: the rate per hour
+ * @returns {number} the number of days
+ */
+export function daysInBudget(budget, ratePerHour) {
+  return Math.floor(budget / dayRate(ratePerHour));
+}
+
+/**
+ * Calculates the discounted rate for large projects, rounded up
+ *
+ * @param {number} ratePerHour
+ * @param {number} numDays: number of days the project spans
+ * @param {number} discount: for example 20% written as 0.2
+ * @returns {number} the rounded up discounted rate
+ */
+export function priceWithMonthlyDiscount(ratePerHour, numDays, discount) {
+  const diasPorMes = 22;
+  const mesesCompletos = Math.floor(numDays / diasPorMes);
+  const diasRestantes = numDays % diasPorMes;
+
+  const fullMonthRate = mesesCompletos * diasPorMes * dayRate(ratePerHour);
+  const discountedFullMonthRate = fullMonthRate * (1 - discount);
+  const remainingDaysRate = diasRestantes * dayRate(ratePerHour);
+
+  const totalRate = discountedFullMonthRate + remainingDaysRate;
+  return Math.ceil(totalRate);
+}
+
+// Ejemplo de uso
+const ratePerHour = 89;
+const numDays = 230;
+const discount = 0.42;
+
+console.log(`Day rate for $${ratePerHour}/hour: $${dayRate(ratePerHour)}`);
+console.log(`Days in budget of $20000 for $${ratePerHour}/hour: ${daysInBudget(20000, ratePerHour)}`);
+console.log(`Price with monthly discount: $${priceWithMonthlyDiscount(ratePerHour, numDays, discount)}`);
