@@ -61,11 +61,3 @@ export function priceWithMonthlyDiscount(ratePerHour, numDays, discount) {
   return Math.ceil(totalRate);
 }
 
-// Ejemplo de uso
-const ratePerHour = 89;
-const numDays = 230;
-const discount = 0.42;
-
-console.log(`Day rate for $${ratePerHour}/hour: $${dayRate(ratePerHour)}`);
-console.log(`Days in budget of $20000 for $${ratePerHour}/hour: ${daysInBudget(20000, ratePerHour)}`);
-console.log(`Price with monthly discount: $${priceWithMonthlyDiscount(ratePerHour, numDays, discount)}`);
