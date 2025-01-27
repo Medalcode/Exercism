@@ -35,11 +35,34 @@ def make_word_groups(vocab_words):
 
 
 def remove_suffix_ness(word):
-    """Remove the suffix from the word while keeping spelling in mind.
+    """Remove the suffix 'ness' from the word while keeping spelling in mind.
 
     :param word: str - of word to remove suffix from.
     :return: str - of word with suffix removed & spelling adjusted.
 
     For example: "heaviness" becomes "heavy", but "sadness" becomes "sad".
     """
+    # Verificar si la palabra termina con "ness"
+    if len(word) > 4 and word[-4:] == "ness":
+        root = word[:-4]  # Eliminar el sufijo "ness"
+        # Verificar si la raíz termina en "i" y antes de la "i" hay una consonante
+        if len(root) > 1 and root[-1] == "i" and root[-2] not in "aeiou":
+            root = root[:-1] + "y"  # Reemplazar "i" con "y"
+        return root
+    return word
+
+    
+
+
+def adjective_to_verb(sentence, index):
+    """Convert the adjective at the given index in the sentence to a verb by adding 'en'.
+
+    :param sentence: str - the sentence containing the adjective.
+    :param index: int - the index of the adjective in the sentence.
+    :return: str - the adjective converted to a verb.
+    """
+    words = sentence.split()
+    adjective = words[index].strip('.,!?')  # Eliminar puntuación
+    return adjective + 'en'
+
     
